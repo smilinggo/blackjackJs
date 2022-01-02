@@ -3,7 +3,6 @@ function randomNum() {
 }
 
 let cards = []
-const reducer = (accumulator, curr) => accumulator + curr;
 let hasBlackJack = false;
 let isAlive = true;
 let message = ""
@@ -11,40 +10,53 @@ let messageEl = document.getElementById("message-el");
 let cardsEl = document.getElementById("cards-el");
 let sumEl = document.querySelector("#sum-el");
 
-let firstCard = randomNum();
-let secondCard = randomNum();
-let sum = firstCard + secondCard
-cards.push(firstCard)
-cards.push(secondCard)
+const reducer = (accumulator, curr) => accumulator + curr;
+const drawCard = () => {
+    let card = randomNum()
+    cards.push(card)
+}
+
+const sum = () => {
+    cardsTotal = cards.reduce(reducer)
+    return cardsTotal;
+}
 
 
-function startGame() {
+
+const startGame = () => {
+    drawCard();
+    drawCard();
     renderGame();
 }
 
 
 function renderGame() {
     cardsEl.textContent = "Cards: " + cards
-    sumEl.textContent = "Sum: " + cards.reduce(reducer);
-    if (sum <= 20) {
+    sumEl.textContent = "Sum: " + sum();
+    if (cardsTotal <= 20) {
         message = ("Do you want to draw a new card? ")
-    } else if (sum === 21) {
+    } else if (cardsTotal === 21) {
         message = ("Wohoo! You've got Blackjack! ")
         hasBlackJack = true
     } else {
         message = ("You're out of the game! ")
         isAlive = false
     }
-
-    // 3. Log it out!
     messageEl.textContent = message;
 }
 
 function newCard() {
+    document.getElementById("startButton-el").style.visibility = 'hidden'
+    if (!isAlive) {
+        console.log("You lose!")
+    }
     console.log("Drawing a new card from the deck!")
-    let nextCard = randomNum();
-    cards.push(nextCard)
-    sum += nextCard;
+    drawCard();
     renderGame();
    
+}
+
+function newHand() {
+    cards = []
+    startGame();
 }
