@@ -6,7 +6,7 @@ let isAlive = true;
 let message = ""
 let messageEl = document.getElementById("message-el");
 let cardsEl = document.getElementById("cards-el");
-let sumEl = document.getElementById("sum-el");
+let sumEl = document.querySelector("#sum-el");
 
 let firstCard = randomNum();
 let secondCard = randomNum();
@@ -14,6 +14,8 @@ let sum = firstCard + secondCard
 
 
 function startGame() {
+    cardsEl.textContent += firstCard + " " + secondCard
+    sumEl.textContent += sum;
     if (sum <= 20) {
         message = ("Do you want to draw a new card? ")
     } else if (sum === 21) {
@@ -26,7 +28,8 @@ function startGame() {
 
     // 3. Log it out!
     messageEl.textContent = message;
-    cardsEl.textContent += firstCard + " " + secondCard
-    sumEl.textContent += sum;
-   
+}
+
+function newCard() {
+    console.log("Drawing a new card from the deck!")
 }
