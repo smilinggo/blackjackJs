@@ -1,14 +1,19 @@
-function randomNum() {
-    return Math.floor(Math.random() * 10) + 2;
+let player = {
+    name: "Toney",
+    chips: 200
 }
-
+console.log(player.name);
 let cards = []
 let hasBlackJack = false;
-let isAlive = true;
+let isAlive = false;
 let message = ""
 let messageEl = document.getElementById("message-el");
 let cardsEl = document.getElementById("cards-el");
 let sumEl = document.querySelector("#sum-el");
+let playerEl = document.getElementById("player-el")
+
+playerEl.textContent += player.name + ": $" + player.chips
+
 
 const reducer = (accumulator, curr) => accumulator + curr;
 const drawCard = () => {
@@ -24,6 +29,7 @@ const sum = () => {
 
 
 const startGame = () => {
+    isAlive = true;
     drawCard();
     drawCard();
     renderGame();
@@ -46,17 +52,30 @@ function renderGame() {
 }
 
 function newCard() {
-    document.getElementById("startButton-el").style.visibility = 'hidden'
-    if (!isAlive) {
-        console.log("You lose!")
+    if (isAlive && !hasBlackJack){
+        document.getElementById("startButton-el").style.visibility = 'hidden'
+        console.log("Drawing a new card from the deck!")
+        drawCard();
+        renderGame();
     }
-    console.log("Drawing a new card from the deck!")
-    drawCard();
-    renderGame();
    
 }
 
 function newHand() {
     cards = []
     startGame();
+
+}
+
+function randomNum() {
+    randomCard = Math.floor( Math.random()*13 ) + 1;
+    console.log(randomCard)
+
+    if (randomCard === 1) {
+        return 11
+    } else if (randomCard > 10) {
+        return 10
+    } else {
+    return randomCard
+    }
 }
